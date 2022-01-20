@@ -1,0 +1,14 @@
+application:
+  security:
+    user1: password1
+    user2: password2
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: logs
+      authentication-database: admin
+      username: root
+      password: example
