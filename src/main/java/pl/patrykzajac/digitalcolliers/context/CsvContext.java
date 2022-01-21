@@ -8,7 +8,9 @@ import pl.patrykzajac.digitalcolliers.entity.csv.FeeWages;
 import pl.patrykzajac.digitalcolliers.entity.csv.Transaction;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -37,12 +39,10 @@ public class CsvContext {
     }
 
     private void loadData() throws URISyntaxException, IOException {
-        this.transactions = new CsvToBeanBuilder<Transaction>(Files.newBufferedReader(Paths.get(ClassLoader.getSystemResource("csv/transactions.csv").toURI())))
+        this.transactions = new CsvToBeanBuilder<Transaction>(new BufferedReader( new InputStreamReader(getClass().getClassLoader().getResourceAsStream("csv/transactions.csv"))))
                 .withType(Transaction.class).build().parse();
-        log.info(String.format("transactions loaded: %s", transactions.size()));
-        this.feeWages = new CsvToBeanBuilder<FeeWages>(Files.newBufferedReader(Paths.get(ClassLoader.getSystemResource("csv/fee_wages.csv").toURI())))
+        this.feeWages = new CsvToBeanBuilder<FeeWages>(new BufferedReader( new InputStreamReader(getClass().getClassLoader().getResourceAsStream("csv/fee_wages.csv"))))
                 .withType(FeeWages.class).build().parse().stream().sorted(Comparator.comparing(FeeWages::getTransactionValueLessThen)).collect(Collectors.toList());
-        log.info(String.format("feeWages loaded: %s", feeWages.size()));
     }
 
     private void processRawData() {
