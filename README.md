@@ -13,3 +13,8 @@ Aplikacja uruchomi się pod adresem:
 Aplikacja wystawia następujący endpoint:
 
 ``localhost:8080/customers/getById?customerId={list|ALL}``
+
+Wymagane jest wprowadzenie danych BASICAUTH
+
+``user1:password1`` lub 
+``user2:password2``
